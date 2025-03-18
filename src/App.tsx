@@ -6,9 +6,9 @@ import { dataProvider } from "./providers/data-provider";
 // import {MyForm} from "./components/form";
 // import {ShowGeneral} from "./components/showGeneral";
 // import { Dropdown } from "./components/dropdown";
-// import {EditProduct} from "./pages/products/edit";
+ import {EditProduct} from "./pages/products/edit";
 // import {ListProducts} from "./pages/products/list";
-import {CreateProduct} from "./pages/products/create";
+//import {CreateProduct} from "./pages/products/create";
 
 export default function App(): JSX.Element {
   // const [itemid, setItemid] = useState<number | string>(1);
@@ -18,9 +18,9 @@ export default function App(): JSX.Element {
       {/* <Dropdown choice={option} setChoice={setOption}/>
       <MyForm id = {itemid} setId= {setItemid} />
       <ShowGeneral input_id={itemid} resourcetype={option} /> */}
-      {/* <EditProduct input_id={123}/> */}
+      <EditProduct/>
       {/* <ListProducts/> */}
-      <CreateProduct/>
+      {/* <CreateProduct/> */}
     </Refine>
   );
 }
