@@ -1,4 +1,3 @@
-import { I_id } from "../../interfaces";
 import { useList } from "@refinedev/core";
 import { Button } from "antd";
 import { useState } from "react";
