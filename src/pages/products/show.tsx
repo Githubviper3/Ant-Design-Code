@@ -15,6 +15,7 @@ export const ShowProduct = () => {
       enabled: !!data?.data,
     },
   });
+  
 
   return (
     <Show isLoading={isLoading}>
