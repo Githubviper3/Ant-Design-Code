@@ -1,37 +1,36 @@
-import { useForm, useSelect, Edit } from "@refinedev/antd";
+import { useForm, Edit } from "@refinedev/antd";
+import { Form, Input } from "antd";
+import { UpdateList } from "../../components/UpdateList";
 
-import { Form, Input, Select, InputNumber } from "antd";
 
-export const EditProduct = () => {
-  const { formProps, saveButtonProps, query } = useForm({
-    refineCoreProps: {
-      redirect: "show",
-    },
+export const EditUser = () => {
+  const { formProps, saveButtonProps,query} = useForm({
+    redirect: "show",
   });
 
-  const { selectProps } = useSelect({
-    resource: "categories",
-    defaultValue: query?.data?.data?.category?.id,
-  });
+
+
+  const firstName = query?.data?.data?.firstName
+  const lastName = query?.data?.data?.lastName
+  const email = query?.data?.data?.email
+  const user_name =  firstName +" " + lastName
+  const skills:string[] = query?.data?.data?.skills
+  
 
   return (
-    <Edit saveButtonProps={saveButtonProps}>
+    
+    <Edit title={user_name} saveButtonProps={saveButtonProps}>
       <Form {...formProps} layout="vertical">
-        <Form.Item label="Name" name="name">
-          <Input />
+        <Form.Item label="Firstname" name="firstname" initialValue={firstName}>
+          <Input/>
         </Form.Item>
-        <Form.Item label="Description" name="description">
-          <Input.TextArea />
-        </Form.Item>
-        <Form.Item label="Material" name="material">
-          <Input />
-        </Form.Item>
-        <Form.Item label="Category" name={["category", "id"]}>
-          <Select {...selectProps} />
-        </Form.Item>
-        <Form.Item label="Price" name="price">
-          <InputNumber step="0.01" stringMode />
-        </Form.Item>
+        <Form.Item label="Lastname" name="lastname" initialValue={lastName}>
+          <Input/>
+        </Form.Item> 
+        <Form.Item label="Email Address" name="email" initialValue={email}>
+          <Input/>
+        </Form.Item> 
+        <UpdateList list_items={skills} name={"skills"}/>           
       </Form>
     </Edit>
   );

@@ -14,9 +14,6 @@ import { Table, Space, Input, Select } from "antd";
 export const TableProducts = () => {
   const { tableProps, filters, sorters } = useTable({
     sorters: { initial: [{ field: "id", order: "asc" }] },
-    filters: {
-      initial: [{ field: "category.id", operator: "eq", value: 2 }],
-    },
     syncWithLocation: true,
   });
 

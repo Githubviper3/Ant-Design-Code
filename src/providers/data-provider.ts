@@ -103,5 +103,4 @@ export const dataProvider: DataProvider = {
   },
   getApiUrl: () => API_URL,
   deleteOne: () => { throw new Error("Not implemented"); },
-  /* ... */
 };

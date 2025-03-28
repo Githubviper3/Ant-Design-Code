@@ -1,14 +1,16 @@
-import { useShow, useOne } from "@refinedev/core";
-import { TextField, NumberField, MarkdownField, Show } from "@refinedev/antd";
+import { useShow } from "@refinedev/core";
+import { TextField, Show } from "@refinedev/antd";
 
-import { Button, Typography,List } from "antd";
+import { Typography, Avatar ,Collapse,List } from "antd";
 
+
+const { Panel } = Collapse;
 export const ShowUser = () => {
   const {
     query: { data, isLoading },
   } = useShow();
   
-  const formatbirthday = (data: string,ukformat: boolean = false): string => {
+  const formatbirthday = (data: string): string => {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const dataformat: Date = new Date(data)
     let formated: string = "";
@@ -29,21 +31,23 @@ export const ShowUser = () => {
           break;
       }
     }
-    if (ukformat){
-      formated = `${day}${ending} ${months[dataformat.getMonth()]} ${dataformat.getFullYear()}` 
-    } else{
-      formated = `${months[dataformat.getMonth()]} ${day}${ending} ${months[dataformat.getMonth()]}`
-    }
+
+    formated = `${day}${ending} ${months[dataformat.getMonth()]} ${dataformat.getFullYear()}` 
     return formated;
   }
 
-  const formatListItems= (item:string): string =>{
+  const formatListItems= (item:string) =>{
     return item[0].toUpperCase() + item.slice(1)
   }
-  console.log(data?.data?.skills)
-  const user_name: string  =data?.data?.firstName +" " + data?.data?.lastName
+
+  const user_name = data?.data?.firstName +" " + data?.data?.lastName
+  const avatarinfo = data?.data?.avatar
+  const avatar= <Avatar  size="large" alt={avatarinfo?.name} key={avatarinfo?.uid} src={avatarinfo?.url} />
+  const skills:string[] = data?.data?.skills
+
   return (
-    <Show title={user_name} isLoading={isLoading}>
+    <Show title={user_name} isLoading={isLoading} headerProps={{subTitle:avatar}}>
+      
       <Typography.Title level={5}>Name</Typography.Title>
       <TextField value={user_name} />
 
@@ -52,15 +56,13 @@ export const ShowUser = () => {
     
       <Typography.Title level={5}>Birthday</Typography.Title>
       <TextField value={formatbirthday(data?.data?.birthday)} />
+      
       <Typography.Title level={5}>Skills</Typography.Title>
-      <List
-      bordered
-
-      itemLayout="horizontal"
-      dataSource={data?.data?.skills}
-      renderItem={(item:string) => <List.Item>{formatListItems(item)}</List.Item>}
-    />
-
+      <List 
+      bordered 
+      dataSource={skills}
+      renderItem={(item)=>{return <List.Item>{formatListItems(item)}</List.Item>}}
+      />
     </Show>
   );
 };
