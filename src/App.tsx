@@ -19,6 +19,7 @@ import { CreateProduct } from "./pages/products/create";
 import "antd/dist/reset.css";
 import { ShowUser } from "./pages/users/show";
 import { EditUser } from "./pages/users/edit";
+import { CreateUser } from "./pages/users/create";
 export default function App(): JSX.Element {
   return (
     <BrowserRouter>
@@ -72,6 +73,7 @@ export default function App(): JSX.Element {
                   <Route path="/users">
                     <Route path=":id" element={<ShowUser />} />
                     <Route path="/users/:id/edit" element={<EditUser />} />
+                    <Route path="/users/create" element={<CreateUser />} />
                   </Route>
                 </Route>
               </Routes>
