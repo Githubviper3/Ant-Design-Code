@@ -4,20 +4,12 @@ import {
   EditButton,
   ShowButton,
   getDefaultSortOrder,
-  FilterDropdown,
+  DeleteButton,
   List,
-  useSelect
 } from "@refinedev/antd";
-
+import './customer.css'; 
 import { Table, Space, Select } from "antd";
-interface inputUser {
-  id: number,
-  firstName: string,
-  lastName: string,
-  email: string,
-  skills: string[],
-  avatar: any[]
-}
+
 export const TableUsers = () => {
   const { tableProps, filters,sorters } = useTable({
     sorters: { initial: [{ field: "id", order: "asc" }] },
@@ -27,7 +19,9 @@ export const TableUsers = () => {
   let tabledata = tableProps?.dataSource
   let allskills:string[] =[] 
   tabledata?.forEach((current) =>{
-    allskills.push(...current.skills)
+    if (current.skills){
+      allskills.push(...current.skills)
+    }
   })
   allskills = [...new Set(allskills)]
 
@@ -62,9 +56,13 @@ export const TableUsers = () => {
     return formated;
   }
 
+  const formatListItems= (item:string) =>{
+    return item[0].toUpperCase() + item.slice(1)
+  }
+
   return (
     <List>
-      <Table {...tableProps} rowKey="id">
+      <Table {...tableProps} id="customers"  rowKey="id" style={{background: "#ddd",}}>
         <Table.Column
           dataIndex="id"
           title="ID"
@@ -90,11 +88,37 @@ export const TableUsers = () => {
         render={formatbirthday}
         />
         <Table.Column
+        dataIndex="skills"
+        title="Skills"
+        
+        render={(value:string[])=>{
+          if (value == undefined){
+            return "No Skills"
+          }
+        return <> 
+        {value.map(
+          (item:string) => (
+          <p>{formatListItems(item)}</p>
+          )
+        )}
+        </>
+        }}
+
+        onFilter={(value, record) => {
+          return record.skills?.includes(value);
+        }}
+
+        filters={allskills.map((skill)=> {return {text: formatListItems(skill),value:skill}})}
+        
+        />
+
+        <Table.Column
           title="Actions"
           render={(_, record) => (
             <Space>
               <ShowButton hideText size="small" recordItemId={record.id} />
               <EditButton hideText size="small" recordItemId={record.id} />
+              <DeleteButton hideText size="small" recordItemId={record.id} mutationMode="undoable" />
             </Space>
           )}
         />
