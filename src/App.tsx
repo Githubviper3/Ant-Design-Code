@@ -7,7 +7,7 @@ import {
 } from "@refinedev/antd";
 
 import { BrowserRouter, Routes, Route, Outlet } from "react-router";
-import { ConfigProvider, App as AntdApp } from "antd";
+import { ConfigProvider, App as AntdApp,theme } from "antd";
 
 import { dataProvider } from "./providers/data-provider";
 
@@ -24,8 +24,17 @@ import { TableUsers } from "./pages/users/table";
 export default function App(): JSX.Element {
   return (
     <BrowserRouter>
-      <ConfigProvider>
-        <AntdApp>
+      <ConfigProvider
+      theme={{
+        algorithm: theme.darkAlgorithm, // for dark theme
+        token: {
+          // Seed Token
+          colorPrimary: 'rgb(45, 112, 3)', 
+          colorTextBase: '#ffffff', // White text
+          colorBgBase: '#333333', // Dark background for dark theme
+        }
+      }}>
+        <AntdApp  >
             <Refine
               dataProvider={dataProvider}
               routerProvider={routerProvider}
@@ -33,11 +42,11 @@ export default function App(): JSX.Element {
               resources={[
                 {
                   name: "users",
-                  list: "/users",
-                  show: "/users/:id",
-                  edit: "/users/:id/edit",
-                  create: "/users/create",
-                  meta: { label: "Users" },
+                  list: "/",
+                  show: "/:id",
+                  edit: "/:id/edit",
+                  create: "/create",
+                  meta: { label: "Users" ,},
                 },
               ]}
             >
@@ -45,19 +54,16 @@ export default function App(): JSX.Element {
                 <Route
                   element={
                     <ThemedLayoutV2
-                      Title={(props) => (
-                        <ThemedTitleV2 {...props} text="Users" wrapperStyles={{color: "black"}} />
-                      )}
                     >
                       <Outlet />
                     </ThemedLayoutV2>
                   }
                 >
-                  <Route path="/users">
+                  <Route>
                     <Route index element={<TableUsers/>}/>
                     <Route path=":id" element={<ShowUser />} />
-                    <Route path="/users/:id/edit" element={<EditUser />} />
-                    <Route path="/users/create" element={<CreateUser />} />
+                    <Route path="/:id/edit" element={<EditUser />} />
+                    <Route path="/create" element={<CreateUser />} />
                   </Route>
                 </Route>
               </Routes>
