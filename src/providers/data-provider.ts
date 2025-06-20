@@ -2,6 +2,13 @@ import type { DataProvider } from "@refinedev/core";
 
 const API_URL = "https://api.fake-rest.refine.dev";
 
+const fetcher = async (url: string, options?: RequestInit) => fetch(url, {
+        ...options,
+        headers: {
+            ...options?.headers,
+        },
+    });
+
 export const dataProvider: DataProvider = {
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
     const params = new URLSearchParams();
@@ -25,7 +32,7 @@ export const dataProvider: DataProvider = {
       });
     }
 
-    const response = await fetch(`${API_URL}/${resource}?${params.toString()}`);
+    const response = await fetcher(`${API_URL}/${resource}?${params.toString()}`);
 
     if (response.status < 200 || response.status > 299) throw response;
 
@@ -45,7 +52,7 @@ export const dataProvider: DataProvider = {
       ids.forEach((id) => params.append("id", id));
     }
 
-    const response = await fetch(
+    const response = await fetcher(
       `${API_URL}/${resource}?${params.toString()}`,
     );
 
@@ -56,7 +63,7 @@ export const dataProvider: DataProvider = {
     return { data };
   },
   getOne: async ({ resource, id, meta }) => {
-    const response = await fetch(`${API_URL}/${resource}/${id}`);
+    const response = await fetcher(`${API_URL}/${resource}/${id}`);
 
     if (response.status < 200 || response.status > 299) throw response;
 
@@ -65,7 +72,7 @@ export const dataProvider: DataProvider = {
     return { data };
   },
   create: async ({ resource, variables }) => {
-    const response = await fetch(`${API_URL}/${resource}`, {
+    const response = await fetcher(`${API_URL}/${resource}`, {
       method: "POST",
       body: JSON.stringify(variables),
       headers: {
@@ -80,7 +87,7 @@ export const dataProvider: DataProvider = {
     return { data };
   },
   update: async ({ resource, id, variables }) => {
-    const response = await fetch(`${API_URL}/${resource}/${id}`, {
+    const response = await fetcher(`${API_URL}/${resource}/${id}`, {
       method: "PATCH",
       body: JSON.stringify(variables),
       headers: {
@@ -95,6 +102,12 @@ export const dataProvider: DataProvider = {
     return { data };
   },
   getApiUrl: () => API_URL,
-  deleteOne: () => { throw new Error("Not implemented"); },
-  /* ... */
+  
+  deleteOne: async ({ resource, id }) => {
+    const response = await fetcher(`${API_URL}/${resource}/${id}`,{method: "DELETE"});
+
+    if (response.status < 200 || response.status > 299) throw response;
+    const data = await response.json();
+    return { success: true, message: 'Item successfully deleted.',data: data };
+  },
 };

@@ -1,122 +1,88 @@
-import { useTable, useMany} from "@refinedev/core";
+import { useMany, getDefaultFilter } from "@refinedev/core";
+import {
+  useTable,
+  EditButton,
+  ShowButton,
+  getDefaultSortOrder,
+  FilterDropdown,
+  useSelect,
+  List,
+} from "@refinedev/antd";
+
+import { Table, Space, Input, Select } from "antd";
 
 export const TableProducts = () => {
-  const {
-    tableQuery: { data, isLoading },
-    current,
-    setCurrent,
-    pageCount,
-    sorters,
-    setSorters,
-  } = useTable({
-    resource: "products",
-    pagination: { current: 1, pageSize: 10 },
+  const { tableProps, filters, sorters } = useTable({
     sorters: { initial: [{ field: "id", order: "asc" }] },
+    filters: {
+      initial: [{ field: "category.id", operator: "eq", value: 2 }],
+    },
+    syncWithLocation: true,
   });
 
-  const { data: categories } = useMany({
+  const { data: categories, isLoading } = useMany({
     resource: "categories",
-    ids: data?.data?.map((product) => product.category?.id) ?? [],
+    ids: tableProps?.dataSource?.map((product) => product.category?.id) ?? [],
   });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  const onPrevious = () => {
-    if (current > 1) {
-      setCurrent(current - 1);
-    }
-  };
-
-  const onNext = () => {
-    if (current < pageCount) {
-      setCurrent(current + 1);
-    }
-  };
-
-  const onPage = (page: number) => {
-    setCurrent(page);
-  };
-
-  const getSorter = (field: string) => {
-    const sorter = sorters?.find((sorter) => sorter.field === field);
-
-    if (sorter) {
-      return sorter.order;
-    }
-  }
-
-  const onSort = (field: string) => {
-    const sorter = getSorter(field);
-    setSorters(
-        sorter === "desc" ? [] : [
-        {
-            field,
-            order: sorter === "asc" ? "desc" : "asc",
-        },
-        ]
-    );
-  }
-
-  const indicator = { asc: "⬆️", desc: "⬇️" };
+  const { selectProps } = useSelect({
+    resource: "categories",
+    defaultValue: getDefaultFilter("category.id", filters, "eq"),
+  });
 
   return (
-    <div>
-      <h1>Products</h1>
-      <table>
-        <thead>
-          <tr>
-            <th onClick={() => onSort("id")}>
-              ID {indicator[getSorter("id")]}
-            </th>
-            <th onClick={() => onSort("name")}>
-              Name {indicator[getSorter("name")]}
-            </th>
-            <th>
-              Category
-            </th>
-            <th onClick={() => onSort("material")}>
-              Material {indicator[getSorter("material")]}
-            </th>
-            <th onClick={() => onSort("price")}>
-              Price {indicator[getSorter("price")]}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {data?.data?.map((product) => (
-            <tr key={product.id}>
-              <td>{product.id}</td>
-              <td>{product.name}</td>
-              <td>
-                {
-                  categories?.data?.find(
-                    (category) => category.id == product.category?.id,
-                  )?.title
-                }
-              </td>
-              <td>{product.material}</td>
-              <td>{product.price}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <br />
-      <div className="pagination">
-        <button type="button" onClick={onPrevious}>
-          {"<"}
-        </button>
-          &nbsp;
-          {current - 1 > 0 && <span onClick={() => onPage(current - 1)}>{current - 1}&nbsp;</span>}
-          <b><span className="current">{current}</span></b>
-          &nbsp;
-          {current < pageCount && <span onClick={() => onPage(current + 1)}>{current + 1}</span>}
-          &nbsp;
-        <button type="button" onClick={onNext}>
-          {">"}
-        </button>
-      </div>
-    </div>
+    <List>
+      <Table {...tableProps} rowKey="id">
+        <Table.Column
+          dataIndex="id"
+          title="ID"
+          sorter
+          defaultSortOrder={getDefaultSortOrder("id", sorters)}
+        />
+        <Table.Column
+          dataIndex="name"
+          title="Name"
+          sorter
+          defaultSortOrder={getDefaultSortOrder("name", sorters)}
+          filterDropdown={(props) => (
+            <FilterDropdown {...props}>
+              <Input />
+            </FilterDropdown>
+          )}
+        />
+        <Table.Column
+          dataIndex={["category", "id"]}
+          title="Category"
+          render={(value) => {
+            if (isLoading) {
+              return "Loading...";
+            }
+
+            return categories?.data?.find((category) => category.id == value)
+              ?.title;
+          }}
+          filterDropdown={(props) => (
+            <FilterDropdown
+              {...props}
+              mapValue={(selectedKey) => Number(selectedKey)}
+            >
+              <Select style={{ minWidth: 200 }} {...selectProps} />
+            </FilterDropdown>
+          )}
+          defaultFilteredValue={getDefaultFilter("category.id", filters, "eq")}
+        />
+        <Table.Column dataIndex="material" title="Material" />
+        <Table.Column dataIndex="price" title="Price" />
+        <Table.Column
+          title="Actions"
+          render={(_, record) => (
+            <Space>
+              <ShowButton hideText size="small" recordItemId={record.id} />
+              <EditButton hideText size="small" recordItemId={record.id} />
+            </Space>
+          )}
+        />
+      </Table>
+    </List>
   );
 };
