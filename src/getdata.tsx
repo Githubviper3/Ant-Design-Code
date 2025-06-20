@@ -1,34 +1,32 @@
-import { useForm, useSelect } from "@refinedev/core";
-type Formvalues = {
-    restype: string
-}
-export const getData: React.FC = () => {
-  const { register } = useForm<Formvalues>(
-    
-  );
+import { useSelect } from "@refinedev/core";
 
-
-  //   const { options } = useSelect({
-  //     resource: ,
-  //   });
-  const onSubmit = (data: Formvalues) => {
-    console.log("Data is"+ data)
+interface ICategory {
+  id: number;
+  firstName: string;
+  lastName: string;
+  pagination: {
+    current: 1,
+    pageSize: 50,
   }
-  return <>
-    <form onSubmit={}>
-        <label htmlFor="Type">Resource Type</label>
-        <input type="text" id="Type" {...register("Type")}/>
-    </form>
-        <label htmlFor="category">Category</label>
-        <br />
-        <select id="category" name="category">
+}
+
+export const SelectStuff: React.FC = () => {
+  const { options } = useSelect<ICategory>({
+    resource: "users",
+    optionLabel: (item) => `${item.firstName} ${item.lastName}`
+  });
+
+  return (
+    <label>
+      Select a category:
+      <select>
         {options?.map((option) => (
-            <option key={option.value} value={option.value}>
+          <option key={option.value} value={option.value}>
             {option.label}
-        </option>
+            {console.log(option)}
+          </option>
         ))}
       </select>
-      <br />
-
-      </>
+    </label>
+  );
 };

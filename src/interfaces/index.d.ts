@@ -22,6 +22,7 @@ export interface I_id {
 export interface IformParams {
   id: number|string;
   setId(newid: number|string): void;
+  message?: string
 }
 
 export interface IgetGeneral {
