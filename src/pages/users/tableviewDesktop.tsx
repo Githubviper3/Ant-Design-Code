@@ -1,22 +1,24 @@
-import { getDefaultFilter,CrudSorting } from "@refinedev/core";
-import {
-  EditButton,
-  ShowButton,
-  getDefaultSortOrder,
-  DeleteButton,
-  List,
-} from "@refinedev/antd";
+import { getDefaultFilter} from "@refinedev/core";
+import { EditButton, ShowButton, getDefaultSortOrder, DeleteButton, List, useTable } from "@refinedev/antd";
 import "./smol.css";
-import { Table, Space,TableProps } from "antd";
+import { Table, Space } from "antd";
 
 
-interface DesktopTableProps {
-  tableProps: TableProps<any>; 
-  sorters: CrudSorting;
-  allskills: any[]; 
-}
 
-export const DesktopTable = ({ tableProps, sorters, allskills }: DesktopTableProps) => {
+export const DesktopTable = () => {
+  const { tableProps,sorters,setFilters } = useTable({
+      syncWithLocation: true,
+    });
+  
+    let tabledata = tableProps?.dataSource
+    let allskills:string[] =[] 
+    tabledata?.forEach((current:any) =>{
+      if (current.skills){
+        allskills.push(...current.skills)
+      }
+    })
+    allskills = [...new Set(allskills)]
+
   allskills.sort()
 
   const getFullname = (value: any, record: any): string => {
