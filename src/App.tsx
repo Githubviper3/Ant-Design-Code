@@ -16,7 +16,7 @@ import "antd/dist/reset.css";
 import { ShowUser } from "./pages/users/show";
 import { EditUser } from "./pages/users/edit";
 import { CreateUser } from "./pages/users/create";
-import { TableUsers } from "./pages/users/tableHandler";
+import { TableHandler } from "./pages/users/tableHandler";
 const EmptySider = () => null;
 
 
@@ -61,7 +61,7 @@ export default function App(): JSX.Element {
                   }
                 >
                   <Route>
-                    <Route index element={<TableUsers/>}/>
+                    <Route index element={<TableHandler/>}/>
                     <Route path=":id" element={<ShowUser />} />
                     <Route path="/:id/edit" element={<EditUser />} />
                     <Route path="/create" element={<CreateUser />} />
