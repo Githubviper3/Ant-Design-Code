@@ -1,8 +1,8 @@
-th {
+.UserTable th {
     background-color: rgb(45, 112, 3) !important;
 }
 
-tr:nth-child(2n){
+.UserTable tr:nth-child(2n){
     background-color: #303030 !important;
 }
 
@@ -13,35 +13,43 @@ tr:nth-child(2n){
 
 
 
+
+
 @media only screen and (max-width: 800px) {
-    table {
+    .SortingTable{
+        display: table;
+    }
+    .UserTable table {
         width: 100% !important;
         overflow-y: auto !important;
     }
 
-    td {
+    .UserTable td {
         display: block !important;
     }
 
     .ant-table-measure-row{
         display: none !important;
     }
-    th {
+    .UserTable th {
         display: none !important;
-        border-radius: 0 0 0 0 !important;
     }
 
-    tr {
+    .UserTable tr {
         display: block !important;
-        border: 1px solid black;
+        border: 1px solid black !important;
     }
     .table-container {
-       max-height: 30vh; 
+       max-height: 70vh; 
         overflow-y: auto; 
         overflow-x: auto; 
     }
 
-    .ant-table-thead {
+    .UserTable .ant-table-thead {
         display: none !important;
     }
+}
+
+.filters{
+    display: inline;
 }

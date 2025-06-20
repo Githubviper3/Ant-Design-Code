@@ -1,13 +1,7 @@
 import { useForm, SaveButton } from "@refinedev/antd";
 import { Form, Input, Space, Button } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-interface FormValues {
-  firstname: string;
-  lastname: string;
-  birthday: string;
-  email: string;
-  skills: string[]; // Assuming each skill is a string
-}
+
 export const CreateUser = () => {
   const { formProps, saveButtonProps } = useForm({
     redirect: "edit",
