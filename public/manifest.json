@@ -1,0 +1,8 @@
+{
+  "short_name": "refine authentication example",
+  "name": "refine authentication example",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
