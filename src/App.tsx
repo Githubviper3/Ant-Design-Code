@@ -16,7 +16,7 @@ import "antd/dist/reset.css";
 import { ShowUser } from "./pages/users/show";
 import { EditUser } from "./pages/users/edit";
 import { CreateUser } from "./pages/users/create";
-import { TableUsers } from "./pages/users/table";
+import { TableUsers } from "./pages/users/tableHandler";
 const EmptySider = () => null;
 
 

@@ -4,7 +4,7 @@ import { TextField, Show } from "@refinedev/antd";
 import { Typography, Avatar ,Collapse,List } from "antd";
 
 
-const { Panel } = Collapse;
+
 export const ShowUser = () => {
   const {
     query: { data, isLoading },
