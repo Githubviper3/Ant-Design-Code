@@ -102,14 +102,17 @@ export const TableProducts = () => {
           ))}
         </tbody>
       </table>
+      <br />
       <div className="pagination">
         <button type="button" onClick={onPrevious}>
           {"<"}
         </button>
+          &nbsp;
           {current - 1 > 0 && <span onClick={() => onPage(current - 1)}>{current - 1}&nbsp;</span>}
           <b><span className="current">{current}</span></b>
           &nbsp;
           {current + 1 < pageCount && <span onClick={() => onPage(current + 1)}>{current + 1}</span>}
+          &nbsp;
         <button type="button" onClick={onNext}>
           {">"}
         </button>
