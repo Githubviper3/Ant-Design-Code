@@ -7,7 +7,6 @@ import {
 } from "@refinedev/antd";
 
 import { BrowserRouter, Routes, Route, Outlet } from "react-router";
-import { DashboardOutlined } from "@ant-design/icons";
 import { ConfigProvider, App as AntdApp } from "antd";
 
 import { dataProvider } from "./providers/data-provider";
@@ -17,12 +16,9 @@ import { EditProduct } from "./pages/products/edit";
 import { TableProducts } from "./pages/products/table";
 import { CreateProduct } from "./pages/products/create";
 
-import { Login } from "./pages/auth/login";
-
 import "antd/dist/reset.css";
-import { DashboardPage } from "./pages/dashboard";
 import { ShowUser } from "./pages/users/show";
-
+import { EditUser } from "./pages/users/edit";
 export default function App(): JSX.Element {
   return (
     <BrowserRouter>
@@ -33,14 +29,6 @@ export default function App(): JSX.Element {
               routerProvider={routerProvider}
               notificationProvider={useNotificationProvider}
               resources={[
-                {
-                  name: "dashboard",
-                  list: "/dashboard",
-                  meta: {
-                    label: "Dashboard",
-                    icon: <DashboardOutlined />,
-                  },
-                },
                 {
                   name: "products",
                   list: "/products",
@@ -60,7 +48,6 @@ export default function App(): JSX.Element {
               ]}
             >
               <Routes>
-                <Route path="/dashboard" element={<DashboardPage />} />
                 <Route
                   element={
                     <ThemedLayoutV2
@@ -84,6 +71,7 @@ export default function App(): JSX.Element {
                   </Route>
                   <Route path="/users">
                     <Route path=":id" element={<ShowUser />} />
+                    <Route path="/users/:id/edit" element={<EditUser />} />
                   </Route>
                 </Route>
               </Routes>
