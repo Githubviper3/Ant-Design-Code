@@ -17,6 +17,8 @@ interface DesktopTableProps {
 }
 
 export const DesktopTable = ({ tableProps, sorters, allskills }: DesktopTableProps) => {
+  allskills.sort()
+
   const getFullname = (value: any, record: any): string => {
     return value + " " + record.lastName;
   };

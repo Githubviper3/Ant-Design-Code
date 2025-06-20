@@ -1,32 +1,39 @@
-import { getDefaultFilter, CrudSorting } from "@refinedev/core";
 import {
   EditButton,
   ShowButton,
-  getDefaultSortOrder,
   DeleteButton,
   List,
+  useTable
 } from "@refinedev/antd";
 import "./smol.css";
-import { Table, Space, Select, TableProps } from "antd";
-
+import { Table, Space, Select, Button } from "antd";
+import { CrudFilter } from "@refinedev/core";
 interface inputprops {
     value: string,
     label: string
 }
+import { useState,useMemo } from "react";
 
-interface DesktopTableProps {
-  tableProps: TableProps<any>;
-  sorters: CrudSorting;
-  allskills: any[];
-}
 
-export const DesktopMobile = ({
-  tableProps,
-  sorters,
-  allskills,
-}: DesktopTableProps) => {
+export const DesktopMobile = () => {
+  const { tableProps,setFilters,sorters,setSorters } = useTable({
+      syncWithLocation: true,
+    });
+  
+    let tabledata = tableProps?.dataSource
+    let allskills:string[] =[] 
+    tabledata?.forEach((current:any) =>{
+      if (current.skills){
+        allskills.push(...current.skills)
+      }
+    })
+    allskills = [...new Set(allskills)]
+  
+    allskills.sort()
+
+
   const getFullname = (value: any, record: any): string => {
-    return value + " " + record.lastName;
+    return  value + " " + record.lastName;
   };
   
   const formatbirthday = (value: string): string => {
@@ -65,7 +72,7 @@ export const DesktopMobile = ({
       }
     }
 
-    formated = `${day}${ending} ${
+    formated = `Birthday: ${day}${ending} ${
       months[dataformat.getMonth()]
     } ${dataformat.getFullYear()}`;
     return formated;
@@ -76,19 +83,7 @@ export const DesktopMobile = ({
   };
 
   let options: {[index:string]:inputprops[]} = {
-  id: [
-    { label: "ASC", value: "asc" },
-    { label: "DESC", value: "desc" }
-  ],
-  name: [
-    { label: "ASC", value: "asc" },
-    { label: "DESC", value: "desc" }
-  ],
-  email: [
-    { label: "ASC", value: "asc" },
-    { label: "DESC", value: "desc" }
-  ]
-    ,"skills":[]};
+  "skills":[]};
 
   allskills.forEach((skill)=>{
     options["skills"].push({
@@ -96,41 +91,74 @@ export const DesktopMobile = ({
         value: skill
     })
   })
+  
 
+  const [skillsFilter, setSkillsFilter] = useState<string[]>([]);
 
+  const handleApplyFilters = () => {
+  const filters: CrudFilter[] = [];
+  console.log(skillsFilter)
+  if (skillsFilter.length > 0) {
+    filters.push({
+      field: "skills",
+      operator: "in",
+      value: skillsFilter,
+    });
+  }
+  setFilters(filters, "replace");
+  }
+
+  const currentSorterOrders = useMemo<{ [key: string]: "asc" | "desc" }>(() => {
+    return {
+      id: sorters.find((item) => item.field === "id")?.order || "asc",
+      firstname: sorters.find((item) => item.field === "firstname")?.order || "asc",
+      email: sorters.find((item) => item.field === "email")?.order || "asc",
+    };
+  }, [sorters]);
+  
+  const toggleSort = (field: string) => {
+    setSorters([
+      {
+        field,
+        order: currentSorterOrders[field] === "asc" ? "desc" : "asc",
+      },
+    ]);
+  };
 
   return (
+    <>
     <List>
-    <div>
+      <div>
+        
     <Select
         allowClear
-        style={{ width: "20%" }}
-        placeholder="Id"
+        className="idsort"
+        placeholder="Order ids in"
         options={options.id}
       />
-      &nbsp;
-      <Select
-        allowClear
-        style={{ width: "20%" }}
-        placeholder="Name"
-        options={options.name}
-      />
-        &nbsp;
     <Select
         allowClear
-        style={{ width: "20%" }}
-        placeholder="Email"
+        className="namesort"
+        placeholder="Order names in"
+        options={options.name}
+      />
+    <Select
+        allowClear
+        className="emailsort"
+        placeholder="Order emails in"
         options={options.email}
       />
-        &nbsp;
-        &nbsp;
       <Select
         mode="multiple"
         allowClear
-        style={{ width: "25%" }}
-        placeholder="Skills"
+        className="SkillsFilter"
+        placeholder="Select Skills"
         options={options.skills}
+        onChange={setSkillsFilter}
       />
+      &nbsp;
+      &nbsp;
+      <Button type="primary" onClick={handleApplyFilters}>Apply filters</Button>
 
     </div>
     <br />
@@ -139,18 +167,17 @@ export const DesktopMobile = ({
           <Table.Column
             dataIndex="id"
             title="ID"
-            defaultSortOrder={getDefaultSortOrder("id", sorters)}
+            render={(value)=>{return `User ID: ${value}`}}
           />
           <Table.Column
             dataIndex="firstName"
             title="Name"
-            defaultSortOrder={getDefaultFilter("firstname")}
             render={getFullname}
           />
           <Table.Column
             dataIndex="email"
             title="Email Address"
-            defaultSortOrder={getDefaultFilter("email")}
+            render={(value)=>{return `Email: ${value}`}}
           />
           <Table.Column
             dataIndex="birthday"
@@ -166,20 +193,14 @@ export const DesktopMobile = ({
               }
               return (
                 <>
+                <h3>Skills</h3>
                   {value.map((item: string) => (
                     <p>{formatListItems(item)}</p>
                   ))}
                 </>
               );
             }}
-            // onFilter={(value, record) => {
-            //   return record.skills?.includes(value);
-            // }}
-            // filters={allskills.map((skill:string) => {
-            //   return { text: formatListItems(skill), value: skill };
-            // })}
           />
-
           <Table.Column
             title="Actions"
             render={(_, record) => (
@@ -198,5 +219,6 @@ export const DesktopMobile = ({
         </Table>
       </div>
     </List>
+    </>
   );
 };

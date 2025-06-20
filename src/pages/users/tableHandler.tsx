@@ -1,21 +1,14 @@
-import { getDefaultFilter } from "@refinedev/core";
 import {
   useTable,
-  EditButton,
-  ShowButton,
-  getDefaultSortOrder,
-  DeleteButton,
-  List,
 } from "@refinedev/antd";
 import "./smol.css";
-import { Table, Space} from "antd";
 import {useMediaQuery} from "react-responsive";
 import {DesktopTable} from "./tableviewDesktop";
 import {DesktopMobile} from "./tableviewMobile";
 
-export const TableUsers = () => {
+export const TableHandler = () => {
 
-  const { tableProps, filters,sorters } = useTable({
+  const { tableProps,sorters,setFilters } = useTable({
     syncWithLocation: true,
   });
 
@@ -36,7 +29,7 @@ export const TableUsers = () => {
   if (isMobile){
     
     return (
-      <DesktopMobile tableProps={tableProps} sorters={sorters} allskills={allskills}/>
+      <DesktopMobile/>
     )
   }
   return (

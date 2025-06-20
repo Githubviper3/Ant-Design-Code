@@ -48,8 +48,20 @@
     .UserTable .ant-table-thead {
         display: none !important;
     }
-}
 
-.filters{
-    display: inline;
+    .SkillsFilter{
+        width: 20%;
+    }
+
+    .emailsort{
+        width: 20%;
+    }
+
+    .namesort{
+        width: 20%;
+    }
+    
+    .idsort{
+        width: 20%;
+    }
 }
