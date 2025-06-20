@@ -63,25 +63,26 @@ export const TableUsers = () => {
   }
 
   return (
-    <List>
-      <Table {...tableProps}  rowKey="id" >
+    <List >
+      <div className="table-container">
+        <Table {...tableProps}  rowKey="id" >
         <Table.Column
           dataIndex="id"
           title="ID"
-          sorter
+          
           defaultSortOrder={getDefaultSortOrder("id", sorters)}
         />
         <Table.Column
         dataIndex="firstName"
         title="Name"
-        sorter
+        
         defaultSortOrder={getDefaultFilter("firstname")}
         render = {getFullname}
         />
         <Table.Column
         dataIndex="email"
         title="Email Address"
-        sorter
+        
         defaultSortOrder={getDefaultFilter("email")}
         />
         <Table.Column
@@ -106,11 +107,11 @@ export const TableUsers = () => {
         </>
         }}
 
-        onFilter={(value, record) => {
-          return record.skills?.includes(value);
-        }}
+        // onFilter={(value, record) => {
+        //   return record.skills?.includes(value);
+        // }}
 
-        filters={allskills.map((skill)=> {return {text: formatListItems(skill),value:skill}})}
+        // filters={allskills.map((skill)=> {return {text: formatListItems(skill),value:skill}})}
         
         />
 
@@ -125,6 +126,7 @@ export const TableUsers = () => {
           )}
         />
       </Table>
+      </div>
     </List>
   );
 };
