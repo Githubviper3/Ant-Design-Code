@@ -2,18 +2,46 @@ th {
     background-color: rgb(45, 112, 3) !important;
 }
 
+tr:nth-child(2n){
+    background-color: #303030 !important;
+}
+
+.table-container{
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+
+
 @media only screen and (max-width: 800px) {
     table {
         width: 100% !important;
+        overflow-y: auto !important;
     }
 
-    th {
+    td {
         display: block !important;
+    }
+
+    .ant-table-measure-row{
+        display: none !important;
+    }
+    th {
+        display: none !important;
         border-radius: 0 0 0 0 !important;
     }
 
-    td{
+    tr {
         display: block !important;
-        width: 100% !important;
+        border: 1px solid black;
+    }
+    .table-container {
+       max-height: 30vh; 
+        overflow-y: auto; 
+        overflow-x: auto; 
+    }
+
+    .ant-table-thead {
+        display: none !important;
     }
 }
