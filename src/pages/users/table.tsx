@@ -7,7 +7,7 @@ import {
   DeleteButton,
   List,
 } from "@refinedev/antd";
-import './customer.css'; 
+import "./smol.css"
 import { Table, Space, Select } from "antd";
 
 export const TableUsers = () => {
@@ -62,7 +62,7 @@ export const TableUsers = () => {
 
   return (
     <List>
-      <Table {...tableProps} id="customers"  rowKey="id" style={{background: "#ddd",}}>
+      <Table {...tableProps} rowKey="id" className="hd" >
         <Table.Column
           dataIndex="id"
           title="ID"
