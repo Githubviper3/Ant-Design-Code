@@ -32,14 +32,6 @@ export default function App(): JSX.Element {
               notificationProvider={useNotificationProvider}
               resources={[
                 {
-                  name: "products",
-                  list: "/products",
-                  show: "/products/:id",
-                  edit: "/products/:id/edit",
-                  create: "/products/create",
-                  meta: { label: "Products" },
-                },
-                {
                   name: "users",
                   list: "/users",
                   show: "/users/:id",
@@ -54,29 +46,18 @@ export default function App(): JSX.Element {
                   element={
                     <ThemedLayoutV2
                       Title={(props) => (
-                        <ThemedTitleV2 {...props} text="Products" />
+                        <ThemedTitleV2 {...props} text="Users" wrapperStyles={{color: "black"}} />
                       )}
                     >
                       <Outlet />
                     </ThemedLayoutV2>
                   }
                 >
-                  <Route
-                    index
-                    element={<NavigateToResource resource="products" />}
-                  />
-                  <Route path="/products">
-                    <Route index element={<TableProducts />} />
-                    <Route path=":id" element={<ShowProduct />} />
-                    <Route path=":id/edit" element={<EditProduct />} />
-                    <Route path="create" element={<CreateProduct />} />
-                  </Route>
                   <Route path="/users">
                     <Route index element={<TableUsers/>}/>
                     <Route path=":id" element={<ShowUser />} />
                     <Route path="/users/:id/edit" element={<EditUser />} />
                     <Route path="/users/create" element={<CreateUser />} />
-
                   </Route>
                 </Route>
               </Routes>

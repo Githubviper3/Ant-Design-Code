@@ -102,5 +102,12 @@ export const dataProvider: DataProvider = {
     return { data };
   },
   getApiUrl: () => API_URL,
-  deleteOne: () => { throw new Error("Not implemented"); },
+  
+  deleteOne: async ({ resource, id }) => {
+    const response = await fetcher(`${API_URL}/${resource}/${id}`,{method: "DELETE"});
+
+    if (response.status < 200 || response.status > 299) throw response;
+    const data = await response.json();
+    return { success: true, message: 'Item successfully deleted.',data: data };
+  },
 };
