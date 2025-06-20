@@ -6,7 +6,6 @@ const fetcher = async (url: string, options?: RequestInit) => fetch(url, {
         ...options,
         headers: {
             ...options?.headers,
-            Authorization: localStorage.getItem("my_access_token"),
         },
     });
 
