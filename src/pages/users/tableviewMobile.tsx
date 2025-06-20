@@ -129,35 +129,9 @@ export const DesktopMobile = () => {
     <>
     <List>
       <div>
-        
-    <Select
-        allowClear
-        className="idsort"
-        placeholder="Order ids in"
-        options={options.id}
-      />
-    <Select
-        allowClear
-        className="namesort"
-        placeholder="Order names in"
-        options={options.name}
-      />
-    <Select
-        allowClear
-        className="emailsort"
-        placeholder="Order emails in"
-        options={options.email}
-      />
-      <Select
-        mode="multiple"
-        allowClear
-        className="SkillsFilter"
-        placeholder="Select Skills"
-        options={options.skills}
-        onChange={setSkillsFilter}
-      />
-      &nbsp;
-      &nbsp;
+      <Button type="primary" onClick={()=>{toggleSort("id")}}>Sort id</Button>
+      <Button type="primary" onClick={()=>{toggleSort("firstname")}}>Sort id</Button>
+      <Button type="primary" onClick={()=>{toggleSort("enail")}}>Sort id</Button>
       <Button type="primary" onClick={handleApplyFilters}>Apply filters</Button>
 
     </div>
