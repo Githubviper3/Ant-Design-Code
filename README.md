@@ -41,3 +41,102 @@ npm create refine-app@latest -- --example auth-antd
 <br/>
 
 [![Open auth-antd example from refine](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/embed/github/refinedev/refine/tree/main/examples/auth-antd?view=preview&theme=dark&codemirror=1)
+
+
+      const [itemid, setItemid] = useState<number | string>(123);
+      {/* <Dropdown choice={option} setChoice={setOption}/>
+      <MyForm id = {itemid} setId= {setItemid} />
+      <ShowGeneral input_id={itemid} resourcetype={option} /> */}
+
+      const [itemid, setItemid] = useState<number | string>(123);
+      <MyForm id = {itemid} setId= {setItemid} />
+      <EditProductByID input_id={itemid}/>
+
+
+
+
+
+
+
+
+
+
+/*
+import {useState} from "react";
+import {useList } from "@refinedev/core";
+import { Button } from "antd";
+import styles from "../../css/App.module.css";
+interface ListParams  {
+  current_page?: number,
+  page_size?: number,
+  order_field?: string, //name
+  orderby?: "asc" | "desc";
+}
+
+export const ListProducts: React.FC<ListParams> = ({
+  current_page = 1,
+  page_size = 10,
+  orderby = "asc",
+  order_field = "name",
+}) => {
+  const [page, setPage] = useState<number>(current_page);
+
+  let { data, isLoading } = useList(
+    {
+      resource: "products",
+      pagination: { current: page, pageSize: page_size },
+      sorters: [{ field: order_field, order: orderby }],
+
+    }
+  );
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  const prevPage: React.MouseEventHandler<HTMLElement> = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    } else {
+      console.log("Already on the first page");
+    }
+  };
+
+  const nextPage: React.MouseEventHandler<HTMLElement> = () => {
+    setPage(page + 1);
+  };
+
+  
+  console.log("Current page:",current_page)
+  console.log("page size:",page_size)
+  console.log("data")
+  console.log(data)
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  return <>
+    <div>
+      <h1>Products</h1>
+      <ul>
+        {data?.data?.map((product) => (
+          <li key={product.id}>
+            <p>
+              {product.name}
+              {/* <br />
+              Product Id: {product.id} */}
+              <br />
+              Price: £{product.price}
+              <br />
+              Material: {product.material}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <Button htmlType="button" onClick={prevPage}>&laquo; Previous</Button>
+      <Button htmlType="button" onClick={nextPage} className={styles.next}>Next &raquo;</Button>
+    </div>
+    </>
+};
+*/
