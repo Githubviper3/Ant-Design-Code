@@ -1,8 +1,7 @@
 import { Refine } from "@refinedev/core";
-import routerProvider, { NavigateToResource } from "@refinedev/react-router";
+import routerProvider from "@refinedev/react-router";
 import {
   ThemedLayoutV2,
-  ThemedTitleV2,
   useNotificationProvider,
 } from "@refinedev/antd";
 
@@ -54,7 +53,8 @@ export default function App(): JSX.Element {
               <Routes>
                 <Route
                   element={
-                    <ThemedLayoutV2 Sider={EmptySider}
+                    <ThemedLayoutV2 
+                    Sider={EmptySider}
                     >
                       <Outlet />
                     </ThemedLayoutV2>
