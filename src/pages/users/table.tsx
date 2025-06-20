@@ -5,27 +5,62 @@ import {
   ShowButton,
   getDefaultSortOrder,
   FilterDropdown,
-  useSelect,
   List,
+  useSelect
 } from "@refinedev/antd";
 
-import { Table, Space, Input, Select } from "antd";
-
-export const TableProducts = () => {
-  const { tableProps, filters, sorters } = useTable({
+import { Table, Space, Select } from "antd";
+interface inputUser {
+  id: number,
+  firstName: string,
+  lastName: string,
+  email: string,
+  skills: string[],
+  avatar: any[]
+}
+export const TableUsers = () => {
+  const { tableProps, filters,sorters } = useTable({
     sorters: { initial: [{ field: "id", order: "asc" }] },
     syncWithLocation: true,
   });
 
-  const { data: categories, isLoading } = useMany({
-    resource: "categories",
-    ids: tableProps?.dataSource?.map((product) => product.category?.id) ?? [],
-  });
+  let tabledata = tableProps?.dataSource
+  let allskills:string[] =[] 
+  tabledata?.forEach((current) =>{
+    allskills.push(...current.skills)
+  })
+  allskills = [...new Set(allskills)]
 
-  const { selectProps } = useSelect({
-    resource: "categories",
-    defaultValue: getDefaultFilter("category.id", filters, "eq"),
-  });
+
+  const getFullname =(value: any,record: any):string =>{
+    return value + " " + record.lastName 
+  }
+
+  const formatbirthday = (value: string): string => {
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const dataformat: Date = new Date(value)
+    let formated: string = "";
+    let ending: string="th";
+    let day = dataformat.getDate();
+    if (day>= 11 && day <= 13) {
+      ending =  "th"; 
+    } else{
+      switch (day % 10) {
+        case 1:
+          ending=  "st";
+          break;
+        case 2:
+          ending= "nd";
+          break;
+        case 3:
+          ending= "rd";
+          break;
+      }
+    }
+
+    formated = `${day}${ending} ${months[dataformat.getMonth()]} ${dataformat.getFullYear()}` 
+    return formated;
+  }
 
   return (
     <List>
@@ -37,39 +72,23 @@ export const TableProducts = () => {
           defaultSortOrder={getDefaultSortOrder("id", sorters)}
         />
         <Table.Column
-          dataIndex="name"
-          title="Name"
-          sorter
-          defaultSortOrder={getDefaultSortOrder("name", sorters)}
-          filterDropdown={(props) => (
-            <FilterDropdown {...props}>
-              <Input />
-            </FilterDropdown>
-          )}
+        dataIndex="firstName"
+        title="Name"
+        sorter
+        defaultSortOrder={getDefaultFilter("firstname")}
+        render = {getFullname}
         />
         <Table.Column
-          dataIndex={["category", "id"]}
-          title="Category"
-          render={(value) => {
-            if (isLoading) {
-              return "Loading...";
-            }
-
-            return categories?.data?.find((category) => category.id == value)
-              ?.title;
-          }}
-          filterDropdown={(props) => (
-            <FilterDropdown
-              {...props}
-              mapValue={(selectedKey) => Number(selectedKey)}
-            >
-              <Select style={{ minWidth: 200 }} {...selectProps} />
-            </FilterDropdown>
-          )}
-          defaultFilteredValue={getDefaultFilter("category.id", filters, "eq")}
+        dataIndex="email"
+        title="Email Address"
+        sorter
+        defaultSortOrder={getDefaultFilter("email")}
         />
-        <Table.Column dataIndex="material" title="Material" />
-        <Table.Column dataIndex="price" title="Price" />
+        <Table.Column
+        dataIndex="birthday"
+        title= "Date of birth"
+        render={formatbirthday}
+        />
         <Table.Column
           title="Actions"
           render={(_, record) => (

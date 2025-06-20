@@ -29,7 +29,7 @@ export const EditUser = () => {
         }}>
         <Form.Item 
           label="Firstname" 
-          name="firstname" 
+          name="firstName" 
           initialValue={firstName}
           rules={[
             {
@@ -38,7 +38,7 @@ export const EditUser = () => {
             },
             {
               required: true,
-              message: "Firstname is required!",
+              message: "First name is required!",
             },
           ]} 
         >
@@ -46,7 +46,7 @@ export const EditUser = () => {
         </Form.Item>
         <Form.Item 
           label="Lastname" 
-          name="lastname" 
+          name="lastName" 
           initialValue={lastName}
           rules={[
             {
@@ -55,7 +55,7 @@ export const EditUser = () => {
             },
             {
               required: true,
-              message: "Firstname is required!",
+              message: "Last name is required!",
             },
           ]} 
           >
