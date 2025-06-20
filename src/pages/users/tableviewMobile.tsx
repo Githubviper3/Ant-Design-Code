@@ -5,16 +5,16 @@ import {
   List,
   useTable,
 } from "@refinedev/antd";
-import "./smol.css";
 import { Table, Space, Select, Button } from "antd";
 import { CrudFilter } from "@refinedev/core";
 interface inputprops {
   value: string;
   label: string;
 }
+
 import { useState, useMemo } from "react";
 
-export const DesktopMobile = () => {
+export const MobileTable = () => {
   const { tableProps, setFilters, sorters, setSorters } = useTable({
     syncWithLocation: true,
   });
@@ -31,7 +31,7 @@ export const DesktopMobile = () => {
   allskills.sort();
 
   const getFullname = (value: any, record: any): string => {
-    return "Fullname: "+value + " " + record.lastName;
+    return "Fullname: " + value + " " + record.lastName;
   };
 
   const formatbirthday = (value: string): string => {
@@ -90,6 +90,7 @@ export const DesktopMobile = () => {
   });
 
   const [skillsFilter, setSkillsFilter] = useState<string[]>([]);
+  const [showFilters, setFilterDisplay] = useState<string>("none");
 
   const handleApplyFilters = () => {
     const filters: CrudFilter[] = [];
@@ -113,45 +114,64 @@ export const DesktopMobile = () => {
     };
   }, [sorters]);
 
-const toggleSort = (field: string) => {
-  setSorters([
-    {
-      field,
-      order: currentSorterOrders[field] === "desc" ? "asc" : "desc",
-    },
-  ]);
-};
+  const toggleSort = (field: string) => {
+    setSorters([
+      {
+        field,
+        order: currentSorterOrders[field] === "desc" ? "asc" : "desc",
+      },
+    ]);
+  };
 
+  const toggleFilter = () => {
+    showFilters == "none" ? setFilterDisplay("flex") : setFilterDisplay("none");
+  };
 
   return (
     <>
       <List>
-        <div className="filters">
+        <Button
+          type="primary"
+          onClick={toggleFilter}
+          style={{ marginBottom: "10px" }}
+        >
+          Show filters and sorters
+        </Button>
+        <div className="filters" style={{ display: showFilters }}>
           <Button
-            type="primary"
+            style={{ backgroundColor: "	#7B4B2A" }}
             onClick={() => {
               toggleSort("id");
             }}
           >
-            Sort id in {" "}{currentSorterOrders["id"] === "asc"? "descending order":"ascending order"}
+            Sort id in{" "}
+            {currentSorterOrders["id"] === "asc"
+              ? "descending order"
+              : "ascending order"}
           </Button>
           <Button
-            type="primary"
+            style={{ backgroundColor: "	#7B4B2A" }}
             onClick={() => {
               toggleSort("firstName");
             }}
           >
-            Sort name in {" "}{currentSorterOrders["firstName"]? "descending order":"ascending order"}
+            Sort name in{" "}
+            {currentSorterOrders["firstName"]
+              ? "descending order"
+              : "ascending order"}
           </Button>
           <Button
-            type="primary"
+            style={{ backgroundColor: "	#7B4B2A" }}
             onClick={() => {
               toggleSort("email");
             }}
           >
-            Sort email in {" "}{currentSorterOrders["email"] === "asc"? "descending order":"ascending order"}
+            Sort email in{" "}
+            {currentSorterOrders["email"] === "asc"
+              ? "descending order"
+              : "ascending order"}
           </Button>
-          
+
           <Select
             mode="multiple"
             allowClear
@@ -160,7 +180,7 @@ const toggleSort = (field: string) => {
             options={options.skills}
             onChange={setSkillsFilter}
           />
-          <Button type="primary" onClick={handleApplyFilters} >
+          <Button type="primary" onClick={handleApplyFilters}>
             Apply Skills filter
           </Button>
         </div>
@@ -212,16 +232,16 @@ const toggleSort = (field: string) => {
               title="Actions"
               render={(_, record) => (
                 <>
-                <h3>Actions</h3>
-                <Space>
-                  <ShowButton size="large" recordItemId={record.id} />
-                  <EditButton size="large" recordItemId={record.id} />
-                  <DeleteButton
-                    size="large"
-                    recordItemId={record.id}
-                    mutationMode="undoable"
-                  />
-                </Space>
+                  <h3>Actions</h3>
+                  <Space>
+                    <ShowButton size="large" recordItemId={record.id} />
+                    <EditButton size="large" recordItemId={record.id} />
+                    <DeleteButton
+                      size="large"
+                      recordItemId={record.id}
+                      mutationMode="undoable"
+                    />
+                  </Space>
                 </>
               )}
             />
