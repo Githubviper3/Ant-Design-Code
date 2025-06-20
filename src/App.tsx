@@ -6,32 +6,33 @@ import {
   useNotificationProvider,
 } from "@refinedev/antd";
 
+import "./pages/users/smol.css"
 import { BrowserRouter, Routes, Route, Outlet } from "react-router";
 import { ConfigProvider, App as AntdApp,theme } from "antd";
 
 import { dataProvider } from "./providers/data-provider";
-
-import { ShowProduct } from "./pages/products/show";
-import { EditProduct } from "./pages/products/edit";
-import { TableProducts } from "./pages/products/table";
-import { CreateProduct } from "./pages/products/create";
 
 import "antd/dist/reset.css";
 import { ShowUser } from "./pages/users/show";
 import { EditUser } from "./pages/users/edit";
 import { CreateUser } from "./pages/users/create";
 import { TableUsers } from "./pages/users/table";
+const EmptySider = () => null;
+
+
 export default function App(): JSX.Element {
   return (
     <BrowserRouter>
       <ConfigProvider
+
       theme={{
-        algorithm: theme.darkAlgorithm, // for dark theme
+        algorithm: theme.darkAlgorithm, 
         token: {
           // Seed Token
           colorPrimary: 'rgb(45, 112, 3)', 
-          colorTextBase: '#ffffff', // White text
-          colorBgBase: '#333333', // Dark background for dark theme
+          colorTextBase: '#ffffff',
+          colorBgBase: '#333333',
+ 
         }
       }}>
         <AntdApp  >
@@ -53,7 +54,7 @@ export default function App(): JSX.Element {
               <Routes>
                 <Route
                   element={
-                    <ThemedLayoutV2
+                    <ThemedLayoutV2 Sider={EmptySider}
                     >
                       <Outlet />
                     </ThemedLayoutV2>

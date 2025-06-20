@@ -7,10 +7,12 @@ import {
   DeleteButton,
   List,
 } from "@refinedev/antd";
-import "./smol.css"
+
+import "./smol.css";
 import { Table, Space, Select } from "antd";
 
 export const TableUsers = () => {
+
   const { tableProps, filters,sorters } = useTable({
     sorters: { initial: [{ field: "id", order: "asc" }] },
     syncWithLocation: true,
@@ -62,7 +64,7 @@ export const TableUsers = () => {
 
   return (
     <List>
-      <Table {...tableProps} rowKey="id" className="hd" >
+      <Table {...tableProps}  rowKey="id" >
         <Table.Column
           dataIndex="id"
           title="ID"
@@ -116,9 +118,9 @@ export const TableUsers = () => {
           title="Actions"
           render={(_, record) => (
             <Space>
-              <ShowButton hideText size="small" recordItemId={record.id} />
-              <EditButton hideText size="small" recordItemId={record.id} />
-              <DeleteButton hideText size="small" recordItemId={record.id} mutationMode="undoable" />
+              <ShowButton hideText size="large" recordItemId={record.id} />
+              <EditButton hideText size="large" recordItemId={record.id} />
+              <DeleteButton hideText size="large" recordItemId={record.id} mutationMode="undoable" />
             </Space>
           )}
         />

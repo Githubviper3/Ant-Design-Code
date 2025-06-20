@@ -1,11 +1,19 @@
-.push{
-    box-shadow: 0 inherit #666;
-    transform: translateY(4px);
+th {
+    background-color: rgb(45, 112, 3) !important;
 }
 
-.hd th{
-    background-color: rgb(45, 112, 3);
-}/* Targeting the header of the Ant Design table */
-.ant-table-column > tr > th {
-    background-color: rgb(45, 112, 3); /* Set header background color */
+@media only screen and (max-width: 800px) {
+    table {
+        width: 100% !important;
+    }
+
+    th {
+        display: block !important;
+        border-radius: 0 0 0 0 !important;
+    }
+
+    td{
+        display: block !important;
+        width: 100% !important;
+    }
 }
