@@ -44,7 +44,7 @@ export const ShowUser = () => {
   const avatarinfo = data?.data?.avatar
   const avatar= <Avatar  size="large" alt={avatarinfo?.name} key={avatarinfo?.uid} src={avatarinfo?.url} />
   const skills:string[] = data?.data?.skills
-
+  const message =  user_name + " has no skills"
   return (
     <Show title={user_name} isLoading={isLoading} headerProps={{subTitle:avatar}}>
       
@@ -61,6 +61,7 @@ export const ShowUser = () => {
       <List 
       bordered 
       dataSource={skills}
+      locale={{ emptyText: message }}
       renderItem={(item)=>{return <List.Item>{formatListItems(item)}</List.Item>}}
       />
     </Show>
