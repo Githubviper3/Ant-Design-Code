@@ -111,7 +111,7 @@ export const TableProducts = () => {
           {current - 1 > 0 && <span onClick={() => onPage(current - 1)}>{current - 1}&nbsp;</span>}
           <b><span className="current">{current}</span></b>
           &nbsp;
-          {current + 1 < pageCount && <span onClick={() => onPage(current + 1)}>{current + 1}</span>}
+          {current < pageCount && <span onClick={() => onPage(current + 1)}>{current + 1}</span>}
           &nbsp;
         <button type="button" onClick={onNext}>
           {">"}
