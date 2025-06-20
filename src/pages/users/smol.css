@@ -11,6 +11,9 @@
     overflow-x: auto;
 }
 
+.secondary{
+    background-color:"";
+}
 
 
 
@@ -73,6 +76,6 @@
         padding: 4px 4px !important;
         font-size: large !important;
     }
-}
 
+}
 
