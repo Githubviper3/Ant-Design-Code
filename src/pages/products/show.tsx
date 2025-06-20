@@ -1,11 +1,9 @@
-import { useOne } from "@refinedev/core";
-import { I_id } from "../../interfaces";
+import { useShow } from "@refinedev/core";
 
-export const ShowProduct: React.FC<I_id> = ({ input_id }) => {
-  const { data, isLoading } = useOne({
-    resource: "products",
-    id: input_id,
-  });
+export const ShowProduct = () => {
+  const {
+    query: { data, isLoading },
+  } = useShow();
 
   if (isLoading) {
     return <div>Loading...</div>;
