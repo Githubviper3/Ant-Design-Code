@@ -17,9 +17,6 @@ export const EditUser = () => {
   const email = query?.data?.data?.email
   const user_name =  firstName +" " + lastName
   const skills:string[] = query?.data?.data?.skills
-  const formatListItems= (item:string) =>{
-    return item[0].toUpperCase() + item.slice(1)
-  }
 
   return (
     
@@ -77,9 +74,6 @@ export const EditUser = () => {
         initialValue={email}>
           <Input type="email"/>
         </Form.Item> 
-        {/* <Form.Item name="skills2" >
-        <UpdateList list_items={skills} name={"skills"}/>           
-        </Form.Item> */}
         <h4>Skills</h4>
         <Form.List name="skills">
           
