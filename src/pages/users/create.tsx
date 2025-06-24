@@ -1,14 +1,29 @@
-import { useForm, SaveButton } from "@refinedev/antd";
+import { useForm,Create } from "@refinedev/antd";
 import { Form, Input, Space, Button } from "antd";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { MinusCircleOutlined, PlusOutlined,UnorderedListOutlined  } from "@ant-design/icons";
+import { useGo } from "@refinedev/core";
 
 export const CreateUser = () => {
   const { formProps, saveButtonProps } = useForm({
     redirect: "edit",
   });
 
-
+  const go = useGo();
+  const goback = () =>{
+     go({
+            to: {
+              resource: "users",
+              action: "list",
+            },
+          });
+  }
   return (
+    <Create title={"Create User"} saveButtonProps={saveButtonProps} headerButtons={({ defaultButtons }) => (
+        <>
+          {defaultButtons}
+          <Button type="default" onClick={goback}><UnorderedListOutlined />Users</Button>
+        </>
+      )} >
     <Form {...formProps} layout="vertical">
       <Form.Item
         label="Firstname"
@@ -98,7 +113,7 @@ export const CreateUser = () => {
           </>
         )}
       </Form.List>
-      <SaveButton {...saveButtonProps} />
     </Form>
+    </Create>
   );
 };
