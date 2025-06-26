@@ -127,16 +127,20 @@ export const MobileTable = () => {
     showFilters == "none" ? setFilterDisplay("flex") : setFilterDisplay("none");
   };
 
+
   return (
     <>
-      <List>
-        <Button
-          type="primary"
-          onClick={toggleFilter}
-          style={{ marginBottom: "10px" }}
-        >
+      <List headerButtons={({ defaultButtons }) => (
+        <>
+          <Button
+            type="primary"
+            onClick={toggleFilter}
+          >
           Show filters and sorters
-        </Button>
+          </Button>
+            {defaultButtons}
+        </>
+      )} >
         <div className="filters" style={{ display: showFilters }}>
           <Button
             style={{ backgroundColor: "	#7B4B2A" }}

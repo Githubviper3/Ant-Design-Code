@@ -16,8 +16,8 @@ import { ShowUser } from "./pages/users/show";
 import { EditUser } from "./pages/users/edit";
 import { CreateUser } from "./pages/users/create";
 import { TableHandler } from "./pages/users/tableHandler";
-const EmptySider = () => null;
 
+const EmptySider = () => null;
 
 export default function App(): JSX.Element {
   return (
